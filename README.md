@@ -1,111 +1,84 @@
 # ESP32 Room Climate Monitor
 
-A comprehensive room monitoring system using ESP32 with XY-MD02 temperature/humidity sensor, RS485 to TTL converter, and OLED display.
+![PlatformIO CI](https://github.com/YOUR_USERNAME/esp32-room-climate-monitor/workflows/PlatformIO%20CI/badge.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Platform](https://img.shields.io/badge/platform-ESP32-orange.svg)
+![Framework](https://img.shields.io/badge/framework-Arduino-blue.svg)
 
-## Components Required
+A professional-grade room monitoring system using ESP32 with XY-MD02 temperature/humidity sensor, featuring clean code architecture and comprehensive documentation.
 
-- **ESP32 Development Board**
-- **XY-MD02 Temperature & Humidity Sensor** (RS485 output)
-- **RS485 to TTL Converter Module**
-- **0.96" OLED Display** (128x64, I2C interface)
-- **Jumper wires**
-- **Breadboard or PCB**
+## 🌟 Key Features
 
-## Features
+- **Real-time Monitoring**: Temperature and humidity with 0.1° precision
+- **Professional Display**: SSD1306 OLED with comfort status indicators
+- **Robust Communication**: Modbus RTU over RS485 with CRC validation
+- **Clean Architecture**: Modular, well-documented codebase
+- **Error Handling**: Comprehensive validation and graceful degradation
+- **Configurable**: Easy hardware and parameter customization
 
-- Real-time temperature and humidity monitoring
-- OLED display with clear readings
-- RS485 Modbus RTU communication
-- Error detection and status display
-- Uptime counter
-- Comfortable environment range indicators
+## 📷 Screenshots
 
-## Wiring Diagram
+*Add photos of your working setup here*
 
-### ESP32 to RS485 Module
+## 🔧 Hardware Requirements
 
+| Component | Description | Notes |
+|-----------|-------------|-------|
+| ESP32 Development Board | Main microcontroller | Any ESP32 variant |
+| XY-MD02 Sensor | Temperature/Humidity sensor | RS485 output |
+| RS485 to TTL Module | Communication converter | Auto direction control |
+| SSD1306 OLED | 128x64 display | I2C interface |
+| Jumper Wires | Connections | - |
+| Breadboard/PCB | Assembly | - |
+
+## ⚡ Quick Start
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/esp32-room-climate-monitor.git
+   cd esp32-room-climate-monitor
+   ```
+
+2. **Install PlatformIO**
+   - Install [VS Code](https://code.visualstudio.com/)
+   - Install [PlatformIO extension](https://platformio.org/install/ide?install=vscode)
+
+3. **Wire the components** (see [Wiring Guide](docs/wiring_schematic.md))
+
+4. **Build and upload**
+   ```bash
+   pio run --target upload
+   pio device monitor
+   ```
+
+## 📋 Detailed Documentation
+
+- [📖 Complete Setup Guide](README.md)
+- [🔌 Wiring Schematic](docs/wiring_schematic.md)
+- [🏗️ Code Architecture](docs/CODE_STRUCTURE.md)
+- [⚙️ Configuration Guide](include/config.h)
+
+## 🎯 Performance
+
+- **Response Time**: ~20ms sensor reading
+- **Memory Usage**: 6.7% RAM, 23.1% Flash
+- **Update Rate**: 2-second sensor reads, 1-second display updates
+- **Protocols**: Modbus RTU, I2C, Serial debugging
+
+## 🛠️ Development
+
+### Project Structure
 ```
-ESP32 Pin    →    RS485 Module Pin
-GPIO16 (RX2) →    RXD (Receive Data)
-GPIO17 (TX2) →    TXD (Transmit Data)
-5V           →    VCC
-GND          →    GND
-```
-
-**Note**: This uses ESP32's Serial2 (Hardware Serial 2) with automatic direction control.
-
-### ESP32 to OLED Display
-
-```
-ESP32 Pin    →    OLED Pin
-GPIO21 (SDA) →    SDA
-GPIO22 (SCL) →    SCL
-3.3V         →    VCC
-GND          →    GND
-```
-
-### RS485 Module to XY-MD02 Sensor
-
-```
-RS485 Module →    XY-MD02 Sensor
-A+           →    A+
-B-           →    B-
-```
-
-## Pin Configuration
-
-| Component   | ESP32 Pin | Description                                         |
-| ----------- | --------- | --------------------------------------------------- |
-| RS485 RX    | GPIO16    | Data receive from sensor                            |
-| RS485 TX    | GPIO17    | Data transmit to sensor                             |
-| RS485 DE/RE | Not used  | Automatic direction control (if module supports it) |
-| OLED SDA    | GPIO21    | I2C data line                                       |
-| OLED SCL    | GPIO22    | I2C clock line                                      |
-
-## Software Features
-
-### Main Functions
-
-- `readXYMD02Sensor()`: Reads temperature and humidity via Modbus RTU
-- `updateDisplay()`: Updates OLED with current readings
-- `calculateCRC()`: CRC calculation for Modbus communication
-
-### Display Information
-
-- Room temperature in Celsius
-- Relative humidity percentage
-- Connection status
-- System uptime
-
-## Modbus Communication
-
-The XY-MD02 sensor uses Modbus RTU protocol:
-
-- **Slave Address**: 0x01 (default)
-- **Function Code**: 0x03 (Read Holding Registers)
-- **Register Address**: 0x0000 (Temperature), 0x0001 (Humidity)
-- **Baud Rate**: 9600
-- **Data Format**: 8N1
-
-### Command Frame
-
-```
-01 03 00 00 00 02 C4 0B
+esp32-room-climate-monitor/
+├── src/main.cpp              # Main application
+├── include/config.h          # Hardware configuration
+├── docs/                     # Documentation
+├── test/                     # Test utilities
+├── .github/workflows/        # CI/CD pipeline
+└── README.md                 # This file
 ```
 
-- `01`: Slave address
-- `03`: Function code (Read Holding Registers)
-- `00 00`: Starting register address
-- `00 02`: Number of registers to read
-- `C4 0B`: CRC checksum
-
-## Installation
-
-1. Install PlatformIO in VS Code
-2. Clone this project
-3. Connect components according to wiring diagram
-4. Upload code to ESP32
-
+### Building
 ```bash
 # Build project
 pio run
@@ -114,71 +87,71 @@ pio run
 pio run --target upload
 
 # Monitor serial output
-pio device monitor
+pio device monitor --baud 115200
+
+# Run tests
+pio test
 ```
 
-## Configuration
+## 🤝 Contributing
 
-Edit `include/config.h` to modify:
+Contributions are welcome! Please read our contributing guidelines:
 
-- Pin assignments
-- Sensor parameters
-- Display settings
-- Timing intervals
-- Comfort range limits
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## Troubleshooting
-
-### Common Issues
-
-1. **"Sensor Error" on display**
-
-   - Check RS485 wiring (VCC, GND, TXD, RXD)
-   - Verify sensor power supply (5-24V for XY-MD02)
-   - Ensure correct baud rate (9600)
-   - **For modules without DE/RE**: Make sure your RS485 module supports automatic direction control
-
-2. **OLED not displaying**
-
-   - Check I2C connections (SDA/SCL)
-   - Verify OLED address (0x3C)
-   - Check power supply to OLED (3.3V)
-
-3. **No serial output**
-
-   - Check USB connection
-   - Verify correct COM port
-   - Set monitor speed to 115200
-
-4. **RS485 Communication Issues**
-   - If your module has DE/RE pins but you're not using them, set `RS485_DE_PIN` to the appropriate GPIO in `config.h`
-   - If communication is unreliable, try adding a small delay after sending commands
-   - Check if your RS485 module requires 5V or 3.3V logic levels
-
-### Serial Monitor Output
-
-The system provides debug information via serial monitor:
+## 📊 Monitoring Output
 
 ```
-ESP32 Room Monitor Starting...
-Setup complete!
-Temperature: 23.5°C, Humidity: 45.2%
-Temperature: 23.6°C, Humidity: 45.1%
+==========================================
+ESP32 Room Climate Monitor v1.0
+Initializing system components...
+==========================================
+RS485 initialized with automatic direction control
+OLED display initialized successfully
+System initialization complete!
+Starting monitoring loop...
+TX: 01 04 00 01 00 02 20 0B 
+RX: 9 bytes after 20 ms
+RX: 01 04 04 01 1D 02 7F 2A FE 
+SUCCESS! Temperature: 28.5°C, Humidity: 63.9%
 ```
 
-## Future Enhancements
+## 🐛 Troubleshooting
 
-- [ ] WiFi connectivity for remote monitoring
+| Issue | Solution |
+|-------|----------|
+| Sensor Error | Check RS485 wiring and power |
+| OLED blank | Verify I2C connections and address |
+| No serial output | Check USB connection and baud rate |
+| Communication timeout | Verify sensor address and protocol |
+
+## 📈 Future Roadmap
+
+- [ ] WiFi connectivity and web interface
 - [ ] Data logging to SD card
-- [ ] Web interface for configuration
 - [ ] Multiple sensor support
-- [ ] Alert system for out-of-range values
-- [ ] Historical data graphs
+- [ ] Mobile app integration
+- [ ] Cloud data synchronization
+- [ ] Historical trend analysis
 
-## License
+## 📄 License
 
-This project is open source and available under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Support
+## 🙏 Acknowledgments
 
-For issues and questions, please check the troubleshooting section or open an issue in the project repository.
+- ESP32 community for excellent documentation
+- Adafruit for the display libraries
+- PlatformIO for the development platform
+
+## ⭐ Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=YOUR_USERNAME/esp32-room-climate-monitor&type=Date)](https://star-history.com/#YOUR_USERNAME/esp32-room-climate-monitor&Date)
+
+---
+
+**Made with ❤️ for the IoT community**
