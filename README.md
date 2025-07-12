@@ -1,5 +1,7 @@
 # ESP32 Room Climate Monitor
 
+![WhatsApp Image 2025-07-12 at 11 23 04](https://github.com/user-attachments/assets/4c9ae847-7e54-4fe7-85ce-5f88243671d0)
+
 ![PlatformIO CI](https://github.com/YOUR_USERNAME/esp32-room-climate-monitor/workflows/PlatformIO%20CI/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-ESP32-orange.svg)
